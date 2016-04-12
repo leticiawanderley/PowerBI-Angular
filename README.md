@@ -1,6 +1,6 @@
 # angular-powerbi
 
-Angular module which wraps PowerBI-JavaScript as service and adds a collection of components for each embedded type (Report, Dashboard, Tile, etc) which you can use to easily embed Power BI visuals within your Angular applications.
+Angular module which wraps PowerBI-JavaScript as service and adds a collection of components for each embedded type (Currently only Report is supported) which you can use to easily embed Power BI visuals within your Angular applications.
 
 ## Contents
 
@@ -12,13 +12,13 @@ Angular module which wraps PowerBI-JavaScript as service and adds a collection o
 
 2. Web Components
 
-	The two component behave exactly the same, just one of them uses the new syntax for Angular 1.5 which will help for migration to Angular2.  We also will have a dedicated library for angular2: [PowerBI-Angular2](https://github.com/Microsoft/PowerBI-Angular2)
+	The two components behave exactly the same, just one of them uses the new syntax for Angular 1.5 which will help for migration to Angular2.  In the future, we will have a dedicated library for angular2.
 
 	1. Directive (Angular 1.4x)
 	
 		`<ms-powerbi-report-directive embed-url="vm.report.embedUrl" access-token="vm.report.accessToken"></ms-powerbi-report-directive>`
 
-	2. Component (Angular 1.5x) **COMING SOON**
+	2. Component (Angular 1.5x)
 
 		`<ms-powerbi-report embed-url="vm.report.embedUrl" access-token="vm.report.accessToken"></ms-powerbi-report>`
     
@@ -63,6 +63,10 @@ Angular module which wraps PowerBI-JavaScript as service and adds a collection o
 
 ## Other options
 
-If the properties bound to the attributes on the component are not correct by the time an instance the component is created the visual will not embed.  In order to instruct the component to defer loading until the attributes are valid you can set the attribute `async="true"`. This will watch for changes on the `embed-url` and `access-token` attributes which are required, and if they are both valid strings it will attempt to embed.
+1. `async="true"`
 
-`<ms-powerbi-report-directive embed-url="vm.model.embedUrl" access-token="vm.model.accessToken" async="true"></ms-powerbi-report-directive>`
+    If the properties bound to the attributes on the component are not correct by the time an instance the component is created the visual will not embed.  In order to instruct the component to defer loading until the attributes are valid you can set the attribute `async="true"`. This will watch for changes on the `embed-url` and `access-token` attributes which are required, and if they are both valid strings it will attempt to embed.
+
+    ```
+    <ms-powerbi-report-directive embed-url="vm.model.embedUrl" access-token="vm.model.accessToken" async="true"></ms-powerbi-report-directive>
+    ```
