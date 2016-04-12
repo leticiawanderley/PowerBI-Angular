@@ -160,7 +160,7 @@
 	        // static name = "msPowerbiReportDirective";
 	        this.restrict = "E";
 	        this.replace = true;
-	        this.templateUrl = "/src/components/ms-powerbi-report-directive/template.html";
+	        this.template = '<div class="powerbi-frame"></div>';
 	        this.scope = {
 	            accessToken: "=",
 	            async: "=?",
@@ -282,7 +282,7 @@
 	exports.Controller = Controller;
 	var Component = {
 	    // static name = "msPowerbiReport";
-	    templateUrl: "/src/components/ms-powerbi-report/template.html",
+	    template: '<div class="powerbi-frame"></div>',
 	    bindings: {
 	        accessToken: "<",
 	        async: "<?",

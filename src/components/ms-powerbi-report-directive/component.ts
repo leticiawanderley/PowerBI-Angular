@@ -101,7 +101,7 @@ export default class Directive {
     // static name = "msPowerbiReportDirective";
     restrict = "E";
     replace = true;
-    templateUrl = "/src/components/ms-powerbi-report-directive/template.html";
+    template = '<div class="powerbi-frame"></div>';
     scope = {
         accessToken: "=",
         async: "=?",

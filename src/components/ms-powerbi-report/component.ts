@@ -115,7 +115,7 @@ export class Controller {
 
 const Component:angular.IComponentOptions = {
     // static name = "msPowerbiReport";
-    templateUrl: "/src/components/ms-powerbi-report/template.html",
+    template: '<div class="powerbi-frame"></div>',
     bindings: {
         accessToken: "<",
         async: "<?",

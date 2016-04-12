@@ -47,6 +47,8 @@
     "version": "0.1.0",
     "registry": "npm",
     "dependencies": {
+        "angular": "^1.5.3",
+        "powerbi-client": "^1.0.12"
     },
     "devDependencies": {
       "plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.5"
@@ -67,7 +69,18 @@
           "readline": "@empty"
         }
       }
-    }
+    },
+    "directories": {
+        "dist": "dist"
+    },
+    "files": [
+        "dist"
+    ],
+    "ignore": [
+        "node_modules",
+        "jspm_packages",
+        "typings"
+    ]
   }
 }
 
