@@ -1,6 +1,6 @@
 {
   "name": "angular-powerbi",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Angular library which contains components to embed PowerBi visuals.",
   "main": "dist/angular-powerbi.js",
   "typings": "dist/angular-powerbi.d.ts",
@@ -41,5 +41,33 @@
     "webpack": "^1.12.14",
     "webpack-stream": "^3.1.0",
     "yargs": "^4.4.0"
+  },
+  "jspm": {
+    "name": "angular-powerbi",
+    "version": "0.1.0",
+    "registry": "npm",
+    "dependencies": {
+    },
+    "devDependencies": {
+      "plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.5"
+    },
+    "peerDependencies": {
+      "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    },
+    "overrides": {
+      "npm:typescript@1.8.9": {
+        "browser": {},
+        "map": {
+          "buffer": "@empty",
+          "child_process": "@empty",
+          "fs": "@empty",
+          "path": "@empty",
+          "process": "@empty",
+          "readline": "@empty"
+        }
+      }
+    }
   }
 }
+

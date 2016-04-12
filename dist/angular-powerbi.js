@@ -45,14 +45,24 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var module_1 = __webpack_require__(1);
+	var component_1 = __webpack_require__(1);
+	exports.reportDirective = component_1.default;
+	var component_2 = __webpack_require__(2);
+	exports.reportComponent = component_2.default;
+	var powerbi_1 = __webpack_require__(3);
+	exports.service = powerbi_1.default;
 	angular.module('powerbi.service', [])
-	    .service('PowerBiService' /* service.name */, module_1.service);
+	    .service('PowerBiService' /* service.name */, powerbi_1.default);
+	angular.module('powerbi.components.msPowerbiReportDirective', [
+	    'powerbi.service'
+	])
+	    .directive('msPowerbiReportDirective' /* reportDirective.name */, function () { return new component_1.default(); });
 	angular.module('powerbi.components.msPowerbiReport', [
 	    'powerbi.service'
 	])
-	    .directive('msPowerbiReportDirective' /* reportDirective.name */, function () { return new module_1.reportDirective(); });
+	    .component('msPowerbiReport' /* reportComponent.name */, component_2.default);
 	angular.module('powerbi.components', [
+	    'powerbi.components.msPowerbiReportDirective',
 	    'powerbi.components.msPowerbiReport'
 	]);
 	angular.module('powerbi', [
@@ -63,17 +73,6 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var component_1 = __webpack_require__(2);
-	exports.reportDirective = component_1.default;
-	var powerbi_1 = __webpack_require__(3);
-	exports.service = powerbi_1.default;
-
-
-/***/ },
-/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -121,7 +120,7 @@
 	    Controller.prototype.embed = function (element) {
 	        // TODO: Take from powerbi-config first, then from specific attributes for backwards compatibility
 	        var config = {
-	            type: 'powerbi-report',
+	            type: 'report',
 	            embedUrl: this.embedUrl,
 	            accessToken: this.accessToken,
 	            filterPaneEnabled: this.filterPaneEnabled
@@ -161,7 +160,7 @@
 	        // static name = "msPowerbiReportDirective";
 	        this.restrict = "E";
 	        this.replace = true;
-	        this.templateUrl = "/src/components/ms-powerbi-report/template.html";
+	        this.templateUrl = "/src/components/ms-powerbi-report-directive/template.html";
 	        this.scope = {
 	            accessToken: "=",
 	            async: "=?",
@@ -183,6 +182,119 @@
 	}());
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = Directive;
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var Controller = (function () {
+	    function Controller($scope, $element, $attrs, $timeout, powerBiService) {
+	        this.$scope = $scope;
+	        this.$element = $element;
+	        this.$timeout = $timeout;
+	        this.powerBiService = powerBiService;
+	    }
+	    // $onInit() {
+	    //     // Empty
+	    // }
+	    Controller.prototype.$onDestroy = function () {
+	        this.remove(this.component);
+	    };
+	    Controller.prototype.$postLink = function () {
+	        this.init(this.$element[0]);
+	    };
+	    Controller.prototype.init = function (element) {
+	        if (this.async) {
+	            this.asyncEmbed(element);
+	        }
+	        else {
+	            this.embed(element);
+	        }
+	    };
+	    Controller.prototype.asyncEmbed = function (element) {
+	        var _this = this;
+	        var debouncedEmbed = this.debounce(this.embed.bind(this), 500);
+	        if (this.embedUrl || this.accessToken) {
+	            this.embed(element);
+	        }
+	        else {
+	            this.$scope.$watch(function () { return _this.embedUrl; }, function (embedUrl, oldEmbedUrl) {
+	                // Guard against initialization
+	                if (embedUrl === oldEmbedUrl) {
+	                    return;
+	                }
+	                if (embedUrl && embedUrl.length > 0) {
+	                    debouncedEmbed(element);
+	                }
+	            });
+	            this.$scope.$watch(function () { return _this.accessToken; }, function (accessToken, oldAccessToken) {
+	                // Guard against initialization
+	                if (accessToken === oldAccessToken) {
+	                    return;
+	                }
+	                if (accessToken && accessToken.length > 0) {
+	                    debouncedEmbed(element);
+	                }
+	            });
+	        }
+	    };
+	    Controller.prototype.embed = function (element) {
+	        // TODO: Take from powerbi-config first, then from specific attributes for backwards compatibility
+	        var config = {
+	            type: 'report',
+	            embedUrl: this.embedUrl,
+	            accessToken: this.accessToken,
+	            filterPaneEnabled: this.filterPaneEnabled
+	        };
+	        this.component = this.powerBiService.embed(element, config);
+	    };
+	    Controller.prototype.remove = function (component) {
+	        this.powerBiService.remove(this.component);
+	    };
+	    // TODO: Look for alternative ways to prevent multiple attribute changes to cause multiple embeds for the same report
+	    // By design the embedUrl and accessToken would always change at the same time, so this would always happen.
+	    // Can't use simple isEmbedded flag becuase we want to re-use element and changing state of this is complicated
+	    Controller.prototype.debounce = function (func, wait) {
+	        var _this = this;
+	        var previousTimeoutPromise;
+	        return function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i - 0] = arguments[_i];
+	            }
+	            if (previousTimeoutPromise) {
+	                _this.$timeout.cancel(previousTimeoutPromise);
+	            }
+	            previousTimeoutPromise = _this.$timeout(function () { return func.apply(void 0, args); }, wait);
+	        };
+	    };
+	    Controller.$inject = [
+	        '$scope',
+	        '$element',
+	        '$attrs',
+	        '$timeout',
+	        'PowerBiService'
+	    ];
+	    return Controller;
+	}());
+	exports.Controller = Controller;
+	var Component = {
+	    // static name = "msPowerbiReport";
+	    templateUrl: "/src/components/ms-powerbi-report/template.html",
+	    bindings: {
+	        accessToken: "<",
+	        async: "<?",
+	        embedUrl: "<",
+	        filter: "<?",
+	        filterPaneEnabled: "<?"
+	    },
+	    controller: Controller,
+	    controllerAs: "vm"
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = Component;
 
 
 /***/ },

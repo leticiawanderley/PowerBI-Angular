@@ -10,34 +10,18 @@ export class Controller {
     filterPaneEnabled: boolean;
     powerBiService: PowerBiService;
     $scope: ng.IScope;
-    $element: angular.IAugmentedJQuery;
     $timeout: ng.ITimeoutService;
     
     static $inject = [
         '$scope',
-        '$element',
-        '$attrs',
         '$timeout',
         'PowerBiService'
     ]
     
-    constructor($scope: ng.IScope, $element: angular.IAugmentedJQuery, $attrs: string[], $timeout: ng.ITimeoutService, powerBiService: PowerBiService) {
+    constructor($scope: ng.IScope, $timeout: ng.ITimeoutService, powerBiService: PowerBiService) {
         this.$scope = $scope;
-        this.$element = $element;
         this.$timeout = $timeout;
         this.powerBiService = powerBiService;
-    }
-    
-    // $onInit() {
-    //     // Empty
-    // }
-    
-    $onDestroy() {
-        this.remove(this.component);
-    }
-    
-    $postLink() {
-        this.init(this.$element[0]);
     }
     
     init(element: HTMLElement) {
@@ -113,18 +97,27 @@ export class Controller {
     }
 }
 
-const Component:angular.IComponentOptions = {
-    // static name = "msPowerbiReport";
-    templateUrl: "/src/components/ms-powerbi-report/template.html",
-    bindings: {
-        accessToken: "<",
-        async: "<?",
-        embedUrl: "<",
-        filter: "<?",
-        filterPaneEnabled: "<?"
-    },
-    controller: Controller,
-    controllerAs: "vm"
-};
-
-export default Component;
+export default class Directive {
+    // static name = "msPowerbiReportDirective";
+    restrict = "E";
+    replace = true;
+    templateUrl = "/src/components/ms-powerbi-report-directive/template.html";
+    scope = {
+        accessToken: "=",
+        async: "=?",
+        embedUrl: "=",
+        filter: "=?",
+        filterPaneEnabled: "=?"
+    };
+    controller = Controller;
+    bindToController = true;
+    controllerAs = "vm";
+    
+    link($scope: ng.IScope, element: HTMLElement, attributes: any, controller: Controller, transcludeFn: any) {
+        controller.init(element[0]);
+        
+        $scope.$on('$destroy', () => {
+            controller.remove(controller.component);
+        });
+    }
+}
