@@ -1,8 +1,7 @@
-describe('Unit | Component | ms-powerbi-report-directive: ', function() {
+describe('Unit | Component | powerbi-report: ', function() {
 
     beforeEach(function() {
-        module("templates");
-        module("powerbi.components.msPowerbiReportDirective");
+        module("powerbi.components.powerbiReport");
         module(function($provide) {
             // TODO: Look at using $provide.factory to allow creation of spy objects instead.
             $provide.service('PowerBiService', function() {
@@ -35,7 +34,7 @@ describe('Unit | Component | ms-powerbi-report-directive: ', function() {
         // Arrange
 
         // Act 
-        angularElement = $compile('<ms-powerbi-report-directive access-token="testData.accessToken" embed-url="testData.embedUrl"></ms-powerbi-report-directive>')($scope);
+        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
         $scope.$digest();
 
         // Assert
@@ -52,7 +51,7 @@ describe('Unit | Component | ms-powerbi-report-directive: ', function() {
         };
         
         // Act 
-        angularElement = $compile('<ms-powerbi-report-directive access-token="testData.accessToken" embed-url="testData.embedUrl"></ms-powerbi-report-directive>')($scope);
+        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
         $scope.$digest();
 
         // Assert
@@ -65,7 +64,7 @@ describe('Unit | Component | ms-powerbi-report-directive: ', function() {
         $scope.testData.embedUrl = null;
         
         // Act (render component but set attributes to invalid state)
-        angularElement = $compile('<ms-powerbi-report-directive access-token="testData.accessToken" embed-url="testData.embedUrl" async="true"></ms-powerbi-report-directive>')($scope);
+        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl" async="true"></powerbi-report>')($scope);
         $scope.$digest();
 
         // Assert
@@ -86,7 +85,7 @@ describe('Unit | Component | ms-powerbi-report-directive: ', function() {
         $scope.isReportVisible = true;
         
         // Act 
-        angularElement = $compile('<div ng-if="isReportVisible"><ms-powerbi-report-directive access-token="testData.accessToken" embed-url="testData.embedUrl"></ms-powerbi-report-directive></div>')($scope);
+        angularElement = $compile('<div ng-if="isReportVisible"><powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report></div>')($scope);
         $scope.$digest();
         
         $scope.isReportVisible = false;

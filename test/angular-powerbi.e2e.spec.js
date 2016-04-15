@@ -1,7 +1,6 @@
 describe('Integration | Component | ms-powerbi-report: ', function() {
 
     beforeEach(function() {
-        module("templates");
         module("powerbi");
     });
 
@@ -24,7 +23,7 @@ describe('Integration | Component | ms-powerbi-report: ', function() {
         // Arrange
         
         // Act 
-        angularElement = $compile('<ms-powerbi-report-directive access-token="testData.accessToken" embed-url="testData.embedUrl" async="true"></ms-powerbi-report-directive>')($scope);
+        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl" async="true"></powerbi-report>')($scope);
         $scope.$digest();
 
         // Assert

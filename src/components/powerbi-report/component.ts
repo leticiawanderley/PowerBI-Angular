@@ -98,7 +98,7 @@ export class Controller {
 }
 
 export default class Directive {
-    // static name = "msPowerbiReportDirective";
+    // static name = "powerbiReport";
     restrict = "E";
     replace = true;
     template = '<div class="powerbi-frame"></div>';
