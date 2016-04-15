@@ -70,7 +70,8 @@ export class Controller {
             type: 'report',
             embedUrl: this.embedUrl,
             accessToken: this.accessToken,
-            filterPaneEnabled: this.filterPaneEnabled
+            filterPaneEnabled: this.filterPaneEnabled,
+            overwrite: true
         };
         
         this.component = this.powerBiService.embed(element, config);

@@ -47,7 +47,8 @@ describe('Unit | Component | powerbi-report: ', function() {
             type: 'report',
             embedUrl: $scope.testData.embedUrl,
             accessToken: $scope.testData.accessToken,
-            filterPaneEnabled: undefined
+            filterPaneEnabled: undefined,
+            overwrite: true
         };
         
         // Act 
