@@ -6,7 +6,13 @@ export {
     service
 }
 
-angular.module('powerbi.service', [])
+angular.module('powerbi.global', [])
+    .value('PowerBiGlobal', window.Powerbi)
+    ;
+
+angular.module('powerbi.service', [
+    'powerbi.global'
+])
     .service('PowerBiService' /* service.name */, service)
     ;
 

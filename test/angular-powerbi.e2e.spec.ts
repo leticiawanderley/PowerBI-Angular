@@ -1,12 +1,13 @@
 describe('Integration | Component | ms-powerbi-report: ', function() {
 
     beforeEach(function() {
-        module("powerbi");
+        angular.mock.module("powerbi");
     });
 
-    var $compile;
-    var $rootScope;
-    var $scope;
+    let $compile;
+    let $rootScope;
+    let $scope;
+    let angularElement;
 
     beforeEach(inject(function(_$compile_, _$rootScope_, PowerBiService) {
         $compile = _$compile_;

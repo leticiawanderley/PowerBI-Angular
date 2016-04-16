@@ -3,14 +3,12 @@ import PowerBiService from '../../services/powerbi';
 
 export class Controller {
     accessToken: string;
-    async: boolean;
     component: pbi.Embed;
     embedUrl: string;
-    filter: string;
-    filterPaneEnabled: boolean;
-    powerBiService: PowerBiService;
-    $scope: ng.IScope;
-    $timeout: ng.ITimeoutService;
+    options: pbi.IEmbedOptions;
+    private powerBiService: PowerBiService;
+    private $scope: ng.IScope;
+    private $timeout: ng.ITimeoutService;
     
     static $inject = [
         '$scope',
@@ -24,66 +22,65 @@ export class Controller {
         this.powerBiService = powerBiService;
     }
     
+    /**
+     * Handler after component is inserted in the DOM. If required attributes are valid embed immediately
+     * otherwise, watch attributes and embed when they are valid. 
+     */
     init(element: HTMLElement) {
-        if(this.async) {
-            this.asyncEmbed(element);
-        }
-        else {
+        if(this.validateRequiredAttributes()) {
             this.embed(element);
         }
-    }
-    
-    asyncEmbed(element: HTMLElement) {
-        const debouncedEmbed = this.debounce(this.embed.bind(this), 500);
         
-        if(this.embedUrl || this.accessToken) {
-            this.embed(element);
-        }
-        else {
-            this.$scope.$watch(() => this.embedUrl, (embedUrl, oldEmbedUrl) => {
-                // Guard against initialization
-                if(embedUrl === oldEmbedUrl) {
-                    return;
-                }
-                
-                if(embedUrl && embedUrl.length > 0) {
-                    debouncedEmbed(element);
-                }
-            });
+        // TODO: Look for another way to ensure both attributes have changed before calling this.embed.
+        // In most cases embedUrl and accessToken will be updated at the same time, but this takes two cycles
+        // for the changes to propegate from the parent $scope to this $scope.
+        // perhaps we can just use $timeout() directly. 
+        const debouncedEmbed = this.debounce(this.embed.bind(this), 100);
+        
+        this.$scope.$watch(() => this.embedUrl, (embedUrl, oldEmbedUrl) => {
+            // Guard against initialization
+            if(embedUrl === oldEmbedUrl) {
+                return;
+            }
             
-            this.$scope.$watch(() => this.accessToken, (accessToken, oldAccessToken) => {
-                // Guard against initialization
-                if(accessToken === oldAccessToken) {
-                    return;
-                }
-                
-                if(accessToken && accessToken.length > 0) {
-                    debouncedEmbed(element);
-                }
-            });
-        }
+            if(this.validateRequiredAttributes()) {
+                debouncedEmbed(element);
+            }
+        });
+        
+        this.$scope.$watch(() => this.accessToken, (accessToken, oldAccessToken) => {
+            // Guard against initialization
+            if(accessToken === oldAccessToken) {
+                return;
+            }
+            
+            if(this.validateRequiredAttributes()) {
+                debouncedEmbed(element);
+            }
+        });
     }
     
-    embed(element: HTMLElement) {
-        // TODO: Take from powerbi-config first, then from specific attributes for backwards compatibility
+    /**
+     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
+     */
+    private embed(element: HTMLElement) {
         const config: pbi.IEmbedOptions = {
             type: 'report',
             embedUrl: this.embedUrl,
-            accessToken: this.accessToken,
-            filterPaneEnabled: this.filterPaneEnabled,
-            overwrite: true
+            accessToken: this.accessToken
         };
+        
+        angular.extend(config, this.options);
         
         this.component = this.powerBiService.embed(element, config);
     }
     
+    /**
+     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
+     */
     remove(component: pbi.Embed) {
         this.powerBiService.remove(this.component);
     }
-    
-    // TODO: Look for alternative ways to prevent multiple attribute changes to cause multiple embeds for the same report
-    // By design the embedUrl and accessToken would always change at the same time, so this would always happen.
-    // Can't use simple isEmbedded flag becuase we want to re-use element and changing state of this is complicated
     
     private debounce(func: Function, wait: number): Function {
         let previousTimeoutPromise;
@@ -96,6 +93,14 @@ export class Controller {
             previousTimeoutPromise = this.$timeout(() => func(...args), wait);
         }
     }
+    
+    /**
+     * Ensure required attributes (embedUrl and accessToken are valid before attempting to embed) 
+     */
+    private validateRequiredAttributes() {
+        return (typeof this.embedUrl === 'string' && this.embedUrl.length > 0)
+            && (typeof this.accessToken === 'string' && this.accessToken.length > 0);
+    }
 }
 
 export default class Directive {
@@ -105,10 +110,8 @@ export default class Directive {
     template = '<div class="powerbi-frame"></div>';
     scope = {
         accessToken: "=",
-        async: "=?",
         embedUrl: "=",
-        filter: "=?",
-        filterPaneEnabled: "=?"
+        options: "=?"
     };
     controller = Controller;
     bindToController = true;
