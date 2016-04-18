@@ -47,7 +47,8 @@
 	"use strict";
 	var component_1 = __webpack_require__(1);
 	exports.reportDirective = component_1.default;
-	var powerbi_1 = __webpack_require__(2);
+	var component_2 = __webpack_require__(2);
+	var powerbi_1 = __webpack_require__(3);
 	exports.service = powerbi_1.default;
 	angular.module('powerbi.global', [])
 	    .value('PowerBiGlobal', window.Powerbi);
@@ -59,8 +60,13 @@
 	    'powerbi.service'
 	])
 	    .directive('powerbiReport' /* reportDirective.name */, function () { return new component_1.default(); });
+	angular.module('powerbi.components.powerbiComponent', [
+	    'powerbi.service'
+	])
+	    .directive('powerbiComponent' /* componentDirective.name */, function () { return new component_2.default(); });
 	angular.module('powerbi.components', [
-	    'powerbi.components.powerbiReport'
+	    'powerbi.components.powerbiReport',
+	    'powerbi.components.powerbiComponent'
 	]);
 	angular.module('powerbi', [
 	    'powerbi.service',
@@ -188,6 +194,103 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var Controller = (function () {
+	    function Controller($scope, powerBiService) {
+	        this.$scope = $scope;
+	        this.powerBiService = powerBiService;
+	        this.validationMap = {
+	            'report': this.validateReportOptions
+	        };
+	    }
+	    /**
+	     * Handler after component is inserted in the DOM. If required attributes are valid embed immediately
+	     * otherwise, watch attributes and embed when they are valid.
+	     */
+	    Controller.prototype.init = function (element) {
+	        var _this = this;
+	        if (this.validateOptions(this.options)) {
+	            this.embed(element, this.options);
+	        }
+	        this.$scope.$watch(function () { return _this.options; }, function (options, oldOptions) {
+	            // Guard against initialization
+	            if (options === oldOptions) {
+	                return;
+	            }
+	            if (_this.validateOptions(_this.options)) {
+	                _this.embed(element, _this.options);
+	            }
+	        }, true);
+	    };
+	    /**
+	     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
+	     */
+	    Controller.prototype.embed = function (element, options) {
+	        this.component = this.powerBiService.embed(element, options);
+	    };
+	    /**
+	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
+	     */
+	    Controller.prototype.remove = function (component) {
+	        this.powerBiService.remove(this.component);
+	    };
+	    /**
+	     * Ensure required options (embedUrl and accessToken are valid before attempting to embed)
+	     */
+	    Controller.prototype.validateOptions = function (options) {
+	        if (!this.options
+	            || !(typeof options.embedUrl === 'string' && options.embedUrl.length > 0)
+	            || !(typeof options.accessToken === 'string' && options.accessToken.length > 0)) {
+	            return false;
+	        }
+	        if (this.validationMap.hasOwnProperty(options.type) && typeof this.validationMap[options.type] === "function") {
+	            return this.validationMap[options.type](options);
+	        }
+	        else {
+	            return false;
+	        }
+	    };
+	    Controller.prototype.validateReportOptions = function (options) {
+	        return true;
+	    };
+	    Controller.$inject = [
+	        '$scope',
+	        'PowerBiService'
+	    ];
+	    return Controller;
+	}());
+	exports.Controller = Controller;
+	var Directive = (function () {
+	    function Directive() {
+	        // static name = "powerbiComponent";
+	        this.restrict = "E";
+	        this.replace = true;
+	        this.template = '<div class="powerbi-frame"></div>';
+	        this.scope = {
+	            accessToken: "=",
+	            embedUrl: "=",
+	            options: "=?"
+	        };
+	        this.controller = Controller;
+	        this.bindToController = true;
+	        this.controllerAs = "vm";
+	    }
+	    Directive.prototype.link = function ($scope, element, attributes, controller, transcludeFn) {
+	        controller.init(element[0]);
+	        $scope.$on('$destroy', function () {
+	            controller.remove(controller.component);
+	        });
+	    };
+	    return Directive;
+	}());
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = Directive;
+
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";

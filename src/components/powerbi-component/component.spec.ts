@@ -1,7 +1,7 @@
-describe('Unit | Component | powerbi-report: ', function() {
+describe('Unit | Component | powerbi-component: ', function() {
 
     beforeEach(function() {
-        angular.mock.module("powerbi.components.powerbiReport");
+        angular.mock.module("powerbi.components.powerbiComponent");
         angular.mock.module(function($provide) {
             // TODO: Look at using $provide.factory to allow creation of spy objects instead.
             $provide.service('PowerBiService', function() {
@@ -26,6 +26,7 @@ describe('Unit | Component | powerbi-report: ', function() {
         
         $scope = $rootScope.$new();
         $scope.testData = {
+            type: "report",
             accessToken: "fakeToken",
             embedUrl: "fakeEmbedUrl"
         };
@@ -35,7 +36,7 @@ describe('Unit | Component | powerbi-report: ', function() {
         // Arrange
 
         // Act 
-        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
+        angularElement = $compile('<powerbi-component options="testData"></powerbi-component>')($scope);
         $scope.$digest();
 
         // Assert
@@ -51,7 +52,7 @@ describe('Unit | Component | powerbi-report: ', function() {
         };
         
         // Act 
-        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
+        angularElement = $compile('<powerbi-component options="testData"></powerbi-component>')($scope);
         $scope.$digest();
 
         // Assert
@@ -60,21 +61,18 @@ describe('Unit | Component | powerbi-report: ', function() {
     
     it('defers calling internal powerBiService.embed until other required attributes are set such as embed-url and access-token', function () {
         // Arrange
-        $scope.testData.accessToken = null;
-        $scope.testData.embedUrl = null;
+        $scope.testData.type = null;
         
         // Act (render component but set attributes to invalid state)
-        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
+        angularElement = $compile('<powerbi-component options="testData"></powerbi-component>')($scope);
         $scope.$digest();
 
         // Assert
         expect(powerBiServiceMock.embed).not.toHaveBeenCalled();
         
         // Act (Set attributes to valid state)
-        $scope.testData.accessToken = "fakeAccessToken1";
-        $scope.testData.embedUrl = "fakeEmbedUrl1";
+        $scope.testData.type = "report";
         $scope.$digest();
-        $timeout.flush();
         
         // Assert
         expect(powerBiServiceMock.embed).toHaveBeenCalled();
@@ -85,7 +83,7 @@ describe('Unit | Component | powerbi-report: ', function() {
         $scope.isReportVisible = true;
         
         // Act 
-        angularElement = $compile('<div ng-if="isReportVisible"><powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report></div>')($scope);
+        angularElement = $compile('<div ng-if="isReportVisible"><powerbi-component options="testData"></powerbi-component></div>')($scope);
         $scope.$digest();
         
         $scope.isReportVisible = false;
