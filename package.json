@@ -1,6 +1,6 @@
 {
   "name": "angular-powerbi",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.1",
   "description": "Angular library which contains components to embed PowerBi visuals.",
   "main": "dist/angular-powerbi.js",
   "typings": "dist/angular-powerbi.d.ts",
