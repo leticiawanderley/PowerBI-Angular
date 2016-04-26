@@ -48,11 +48,11 @@
   },
   "jspm": {
     "name": "angular-powerbi",
-    "version": "0.1.0",
+    "version": "1.0.0-beta.1",
     "registry": "npm",
     "dependencies": {
       "angular": "^1.5.3",
-      "powerbi-client": "^1.0.12"
+      "powerbi-client": "2.0.0-beta.2"
     },
     "devDependencies": {
       "plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.5"
