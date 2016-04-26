@@ -10,8 +10,7 @@ module.exports = function (config) {
             './node_modules/powerbi-client/dist/powerbi.js',
             './dist/angular-powerbi.js',
             './src/**/*.spec.js',
-            './test/**/*.spec.js',
-            './src/**/*.html'
+            './test/**/*.spec.js'
         ],
         exclude: [],
         reporters: argv.debug ? ['spec'] : ['spec', 'coverage'],

@@ -54,13 +54,19 @@ gulp.task('compile:src', 'Compile typescript for library', function() {
 });
 
 gulp.task('compile:spec', 'Compile typescript for tests', function () {
-    var tsProject = ts.createProject('tsconfig.json');
+    var unitTestProject = ts.createProject('tsconfig.json');
+    var unitTestResult = gulp.src(['./typings/browser/**/*.d.ts', './src/**/*.spec.ts'])
+        .pipe(ts(unitTestProject));
+    var unitTestStream = unitTestResult.js.pipe(gulp.dest('./src'));
     
-    var tsResult = gulp.src(['./src/**/*.spec.ts'])
-        .pipe(ts(tsProject))
-        ;
-        
-    return tsResult.js.pipe(gulp.dest('./src'));
+    var e2eTestProject = ts.createProject('tsconfig.json');
+    var e2eTestResult = gulp.src(['./typings/browser/**/*.d.ts', './test/**/*.spec.ts'])
+        .pipe(ts(e2eTestProject));
+    var e2eTestStream = e2eTestResult.js.pipe(gulp.dest('./test'));
+    
+    return merge(
+        [unitTestStream, e2eTestStream]
+    );
 })
 
 gulp.task('test:js', 'Runs unit tests', function(done) {
