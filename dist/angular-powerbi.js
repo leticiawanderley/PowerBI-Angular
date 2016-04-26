@@ -133,8 +133,8 @@
 	    /**
 	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
 	     */
-	    Controller.prototype.remove = function (component) {
-	        this.powerBiService.remove(this.component);
+	    Controller.prototype.reset = function (element) {
+	        this.powerBiService.reset(element);
 	    };
 	    Controller.prototype.debounce = function (func, wait) {
 	        var _this = this;
@@ -183,7 +183,7 @@
 	    Directive.prototype.link = function ($scope, element, attributes, controller, transcludeFn) {
 	        controller.init(element[0]);
 	        $scope.$on('$destroy', function () {
-	            controller.remove(controller.component);
+	            controller.reset(element[0]);
 	        });
 	    };
 	    return Directive;
@@ -233,8 +233,8 @@
 	    /**
 	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
 	     */
-	    Controller.prototype.remove = function (component) {
-	        this.powerBiService.remove(this.component);
+	    Controller.prototype.reset = function (element) {
+	        this.powerBiService.reset(element);
 	    };
 	    /**
 	     * Ensure required options (embedUrl and accessToken are valid before attempting to embed)
@@ -280,7 +280,7 @@
 	    Directive.prototype.link = function ($scope, element, attributes, controller, transcludeFn) {
 	        controller.init(element[0]);
 	        $scope.$on('$destroy', function () {
-	            controller.remove(controller.component);
+	            controller.reset(element[0]);
 	        });
 	    };
 	    return Directive;
@@ -301,8 +301,8 @@
 	    PowerBiService.prototype.embed = function (element, config) {
 	        return this.powerBiCoreService.embed(element, config);
 	    };
-	    PowerBiService.prototype.remove = function (component) {
-	        this.powerBiCoreService.remove(component);
+	    PowerBiService.prototype.reset = function (element) {
+	        this.powerBiCoreService.reset(element);
 	    };
 	    PowerBiService.$inject = [
 	        'PowerBiGlobal'

@@ -53,8 +53,8 @@ export class Controller {
     /**
      * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
      */
-    remove(component: pbi.Embed) {
-        this.powerBiService.remove(this.component);
+    reset(element: HTMLElement) {
+        this.powerBiService.reset(element);
     }
     
     /**
@@ -99,7 +99,7 @@ export default class Directive {
         controller.init(element[0]);
         
         $scope.$on('$destroy', () => {
-            controller.remove(controller.component);
+            controller.reset(element[0]);
         });
     }
 }

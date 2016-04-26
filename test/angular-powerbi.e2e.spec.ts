@@ -1,4 +1,4 @@
-describe('Integration | Component | ms-powerbi-report: ', function() {
+describe('Integration | Component | powerbi-report: ', function() {
 
     beforeEach(function() {
         angular.mock.module("powerbi");
@@ -24,7 +24,7 @@ describe('Integration | Component | ms-powerbi-report: ', function() {
         // Arrange
         
         // Act 
-        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl" async="true"></powerbi-report>')($scope);
+        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
         $scope.$digest();
 
         // Assert

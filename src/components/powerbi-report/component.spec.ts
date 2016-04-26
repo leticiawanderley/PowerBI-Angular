@@ -1,3 +1,5 @@
+import PowerBiService from '../../services/powerbi';
+
 describe('Unit | Component | powerbi-report: ', function() {
 
     beforeEach(function() {
@@ -6,23 +8,23 @@ describe('Unit | Component | powerbi-report: ', function() {
             // TODO: Look at using $provide.factory to allow creation of spy objects instead.
             $provide.service('PowerBiService', function() {
                 this.embed = jasmine.createSpy("PowerBiService.embed");
-                this.remove = jasmine.createSpy("PowerBiService.remove");
+                this.reset = jasmine.createSpy("PowerBiService.reset");
             });
         });
     });
 
-    let $compile;
-    let $rootScope;
-    let $timeout;
+    let $compile: ng.ICompileService;
+    let $rootScope: ng.IRootScopeService;
+    let $timeout: ng.ITimeoutService;
     let $scope;
-    let angularElement;
-    let powerBiServiceMock;
+    let angularElement: ng.IAugmentedJQuery;
+    let powerBiServiceMock: PowerBiService;
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, PowerBiService) {
+    beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, PowerBiService: PowerBiService) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $timeout = _$timeout_;
-        powerBiServiceMock =PowerBiService;
+        powerBiServiceMock = PowerBiService;
         
         $scope = $rootScope.$new();
         $scope.testData = {
@@ -80,7 +82,7 @@ describe('Unit | Component | powerbi-report: ', function() {
         expect(powerBiServiceMock.embed).toHaveBeenCalled();
     });
     
-    it('calls the internal powerBiService.remove when components is removed from DOM ($scope is destroyed)', function () {
+    it('calls the internal powerBiService.reset before component is removed from DOM ($scope is destroyed)', function () {
         // Arrange
         $scope.isReportVisible = true;
         
@@ -92,6 +94,6 @@ describe('Unit | Component | powerbi-report: ', function() {
         $scope.$digest();
         
         // Assert
-        expect(powerBiServiceMock.remove).toHaveBeenCalled();
+        expect(powerBiServiceMock.reset).toHaveBeenCalled();
     });
 });

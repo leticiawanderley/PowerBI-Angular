@@ -16,7 +16,7 @@ export default class PowerBiService {
         return this.powerBiCoreService.embed(<pbi.IPowerBiElement>element, config);
     }
     
-    remove(component: pbi.Embed): void {
-        this.powerBiCoreService.remove(component);
+    reset(element: HTMLElement): void {
+        this.powerBiCoreService.reset(element);
     }
 }

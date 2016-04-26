@@ -4,7 +4,7 @@ import PowerBiService from './powerbi';
 describe('Unit | Services | PowerBiService: ', function () {
     let returnValue = {};
     let embedSpy = jasmine.createSpy("PowerBiService.embed").and.returnValue(returnValue);
-    let removeSpy = jasmine.createSpy("PowerBiService.remove");
+    let resetSpy = jasmine.createSpy("PowerBiService.reset");
     let powerBiService: PowerBiService;
 
     beforeEach(function () {
@@ -12,7 +12,7 @@ describe('Unit | Services | PowerBiService: ', function () {
         angular.mock.module(function($provide) {
             $provide.value('PowerBiGlobal', function() {
                 this.embed = embedSpy;
-                this.remove = removeSpy;
+                this.reset = resetSpy;
             });
         });
     });
@@ -39,16 +39,16 @@ describe('Unit | Services | PowerBiService: ', function () {
         expect(actualReturn).toEqual(returnValue);
     });
     
-    it('calls to .remove call the core service .remove', function () {
+    it('calls to .reset call the core service .reset', function () {
         // Arrange
         const testData = {
-            component: {}
+            element: {}
         };
         
         // Act
-        powerBiService.remove(<pbi.Embed>testData.component);
+        powerBiService.reset(<HTMLElement>testData.element);
         
         // Assert
-        expect(removeSpy).toHaveBeenCalledWith(testData.component);
+        expect(resetSpy).toHaveBeenCalledWith(testData.element);
     });
 });

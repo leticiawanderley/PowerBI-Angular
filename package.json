@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.5.3",
-    "powerbi-client": "2.0.0-beta.2"
+    "powerbi-client": "2.0.0-beta.4"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.3",
@@ -51,11 +51,12 @@
   },
   "jspm": {
     "name": "angular-powerbi",
+    "main": "angular-powerbi.js",
     "version": "1.0.0-beta.1",
     "registry": "npm",
     "dependencies": {
       "angular": "^1.5.3",
-      "powerbi-client": "2.0.0-beta.2"
+      "powerbi-client": "2.0.0-beta.4"
     },
     "devDependencies": {
       "plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.5"
