@@ -40,6 +40,9 @@ export class Controller {
             if(this.validateOptions(this.options)) {
                 this.embed(element, this.options);
             }
+            else if (this.component) {
+                this.reset(element);
+            }
         }, true);
     }
     
@@ -55,6 +58,7 @@ export class Controller {
      */
     reset(element: HTMLElement) {
         this.powerBiService.reset(element);
+        this.component = null;
     }
     
     /**

@@ -98,24 +98,27 @@
 	        // In most cases embedUrl and accessToken will be updated at the same time, but this takes two cycles
 	        // for the changes to propegate from the parent $scope to this $scope.
 	        // perhaps we can just use $timeout() directly. 
-	        var debouncedEmbed = this.debounce(this.embed.bind(this), 100);
+	        var debouncedEmbed = this.debounce(function () {
+	            if (_this.validateRequiredAttributes()) {
+	                _this.embed(element);
+	            }
+	            else if (_this.component) {
+	                _this.reset(element);
+	            }
+	        }, 100);
 	        this.$scope.$watch(function () { return _this.embedUrl; }, function (embedUrl, oldEmbedUrl) {
 	            // Guard against initialization
 	            if (embedUrl === oldEmbedUrl) {
 	                return;
 	            }
-	            if (_this.validateRequiredAttributes()) {
-	                debouncedEmbed(element);
-	            }
+	            debouncedEmbed(element);
 	        });
 	        this.$scope.$watch(function () { return _this.accessToken; }, function (accessToken, oldAccessToken) {
 	            // Guard against initialization
 	            if (accessToken === oldAccessToken) {
 	                return;
 	            }
-	            if (_this.validateRequiredAttributes()) {
-	                debouncedEmbed(element);
-	            }
+	            debouncedEmbed(element);
 	        });
 	    };
 	    /**
@@ -135,6 +138,7 @@
 	     */
 	    Controller.prototype.reset = function (element) {
 	        this.powerBiService.reset(element);
+	        this.component = null;
 	    };
 	    Controller.prototype.debounce = function (func, wait) {
 	        var _this = this;
@@ -222,6 +226,9 @@
 	            if (_this.validateOptions(_this.options)) {
 	                _this.embed(element, _this.options);
 	            }
+	            else if (_this.component) {
+	                _this.reset(element);
+	            }
 	        }, true);
 	    };
 	    /**
@@ -235,6 +242,7 @@
 	     */
 	    Controller.prototype.reset = function (element) {
 	        this.powerBiService.reset(element);
+	        this.component = null;
 	    };
 	    /**
 	     * Ensure required options (embedUrl and accessToken are valid before attempting to embed)

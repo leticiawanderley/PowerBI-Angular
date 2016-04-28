@@ -35,7 +35,14 @@ export class Controller {
         // In most cases embedUrl and accessToken will be updated at the same time, but this takes two cycles
         // for the changes to propegate from the parent $scope to this $scope.
         // perhaps we can just use $timeout() directly. 
-        const debouncedEmbed = this.debounce(this.embed.bind(this), 100);
+        const debouncedEmbed = this.debounce(() => {
+            if(this.validateRequiredAttributes()) {
+                this.embed(element);
+            }
+            else if(this.component) {
+                this.reset(element);
+            }
+        }, 100);
         
         this.$scope.$watch(() => this.embedUrl, (embedUrl, oldEmbedUrl) => {
             // Guard against initialization
@@ -43,9 +50,7 @@ export class Controller {
                 return;
             }
             
-            if(this.validateRequiredAttributes()) {
-                debouncedEmbed(element);
-            }
+            debouncedEmbed(element);
         });
         
         this.$scope.$watch(() => this.accessToken, (accessToken, oldAccessToken) => {
@@ -54,9 +59,7 @@ export class Controller {
                 return;
             }
             
-            if(this.validateRequiredAttributes()) {
-                debouncedEmbed(element);
-            }
+            debouncedEmbed(element);
         });
     }
     
@@ -80,6 +83,7 @@ export class Controller {
      */
     reset(element: HTMLElement) {
         this.powerBiService.reset(element);
+        this.component = null;
     }
     
     private debounce(func: Function, wait: number): Function {
