@@ -12,15 +12,16 @@ var ts = require('gulp-typescript'),
     argv = require('yargs').argv
     ;
 
-gulp.task('build', function (done) {
+gulp.task('build', 'Build all code for distribution', function (done) {
     runSequence(
         'clean',
         ['compile:src', 'compile:spec'],
+        ['copy', 'min:js'],
         done
     )
 });
 
-gulp.task('test', function (done) {
+gulp.task('test', 'Builds all code and runs tests', function (done) {
     runSequence(
         'clean',
         ['compile:src', 'compile:spec'],
