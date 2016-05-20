@@ -9,6 +9,9 @@ SystemJS.config({
         }
       }
     }
+  },
+  map: {
+    "angular-powerbi": "local:angular-powerbi@0.1.0"
   }
 });
 
@@ -20,9 +23,10 @@ SystemJS.config({
     "local:*.json"
   ],
   map: {
-    "angular-powerbi": "local:angular-powerbi@0.1.0",
+    "angular": "npm:angular@1.5.5",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
     "plugin-typescript": "github:frankwallis/plugin-typescript@4.0.5",
+    "powerbi-client": "npm:powerbi-client@2.0.0-beta.6",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha"
   },
   packages: {
