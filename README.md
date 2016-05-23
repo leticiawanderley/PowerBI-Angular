@@ -2,6 +2,12 @@
 
 Angular module which wraps PowerBI-JavaScript as service and adds a collection of components for each embedded type (Currently only Report is supported) which you can use to easily embed Power BI visuals within your Angular applications.
 
+## Demo
+
+http://powerbiangular.azurewebsites.net/dist
+
+Source: https://github.com/Azure-Samples/powerbi-angular-client
+
 ## Contents
 
 `angular-powerbi.js` includes the following:
