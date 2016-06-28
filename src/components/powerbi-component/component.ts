@@ -3,7 +3,7 @@ import PowerBiService from '../../services/powerbi';
 
 export class Controller {
     component: pbi.Embed;
-    options: pbi.IEmbedOptions;
+    options: pbi.IEmbedConfiguration;
     validationMap: any;
     private powerBiService: PowerBiService;
     private $scope: ng.IScope;
@@ -49,7 +49,7 @@ export class Controller {
     /**
      * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
      */
-    private embed(element: HTMLElement, options: pbi.IEmbedOptions) {
+    private embed(element: HTMLElement, options: pbi.IEmbedConfiguration) {
         this.component = this.powerBiService.embed(element, options);
     }
     
@@ -64,7 +64,7 @@ export class Controller {
     /**
      * Ensure required options (embedUrl and accessToken are valid before attempting to embed) 
      */
-    private validateOptions(options: pbi.IEmbedOptions) {
+    private validateOptions(options: pbi.IEmbedConfiguration) {
         if (!this.options
             || !(typeof options.embedUrl === 'string' && options.embedUrl.length > 0)
             || !(typeof options.accessToken === 'string' && options.accessToken.length > 0)
@@ -80,7 +80,7 @@ export class Controller {
         }
     }
     
-    private validateReportOptions(options: pbi.IEmbedOptions) {
+    private validateReportOptions(options: pbi.IEmbedConfiguration) {
         return true;
     }
 }

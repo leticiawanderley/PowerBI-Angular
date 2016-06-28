@@ -1,11 +1,14 @@
 import * as pbi from 'powerbi-client';
+import * as models from 'powerbi-models';
 import PowerBiService from '../../services/powerbi';
 
 export class Controller {
     accessToken: string;
     component: pbi.Embed;
     embedUrl: string;
-    options: pbi.IEmbedOptions;
+    reportId: string;
+    name: string;
+    options: models.ISettings;
     private powerBiService: PowerBiService;
     private $scope: ng.IScope;
     private $timeout: ng.ITimeoutService;
@@ -67,10 +70,12 @@ export class Controller {
      * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
      */
     private embed(element: HTMLElement) {
-        const config: pbi.IEmbedOptions = {
+        const config: pbi.IEmbedConfiguration = {
             type: 'report',
             embedUrl: this.embedUrl,
-            accessToken: this.accessToken
+            accessToken: this.accessToken,
+            id: this.reportId,
+            uniqueId: this.name
         };
         
         angular.extend(config, this.options);
@@ -115,6 +120,8 @@ export default class Directive {
     scope = {
         accessToken: "=",
         embedUrl: "=",
+        reportId: "=?",
+        name: "=?",
         options: "=?"
     };
     controller = Controller;
