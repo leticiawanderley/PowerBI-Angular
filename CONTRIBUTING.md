@@ -26,6 +26,6 @@ Or if using VScode: `Ctrl + Shift + B`
 
 Test
 ```
-gulp test
+npm test
 ```
 
