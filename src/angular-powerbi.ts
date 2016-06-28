@@ -2,8 +2,12 @@ import reportDirective from './components/powerbi-report/component';
 import componentDirective from './components/powerbi-component/component';
 import service from './services/powerbi';
 
+export const components = {
+    report: reportDirective,
+    component: componentDirective
+}
+
 export {
-    reportDirective,
     service
 }
 

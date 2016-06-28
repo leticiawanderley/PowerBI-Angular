@@ -4,7 +4,7 @@ describe('Unit | Component | powerbi-component: ', function() {
 
     beforeEach(function() {
         angular.mock.module("powerbi.components.powerbiComponent");
-        angular.mock.module(function($provide) {
+        angular.mock.module(function($provide: ng.auto.IProvideService) {
             // TODO: Look at using $provide.factory to allow creation of spy objects instead.
             $provide.service('PowerBiService', function() {
                 this.embed = jasmine.createSpy("PowerBiService.embed").and.returnValue({ fakeComponent: true });
@@ -16,11 +16,11 @@ describe('Unit | Component | powerbi-component: ', function() {
     let $compile: ng.ICompileService;
     let $rootScope: ng.IRootScopeService;
     let $timeout: ng.ITimeoutService;
-    let $scope;
+    let $scope: any;
     let angularElement: ng.IAugmentedJQuery;
     let powerBiServiceMock: PowerBiService;
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, PowerBiService: PowerBiService) {
+    beforeEach(inject(function(_$compile_: ng.ICompileService, _$rootScope_: ng.IRootScopeService, _$timeout_: ng.ITimeoutService, PowerBiService: PowerBiService) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $timeout = _$timeout_;

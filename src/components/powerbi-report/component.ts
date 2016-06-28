@@ -92,9 +92,9 @@ export class Controller {
     }
     
     private debounce(func: Function, wait: number): Function {
-        let previousTimeoutPromise;
+        let previousTimeoutPromise: any;
         
-        return (...args) => {
+        return (...args: any[]) => {
             if(previousTimeoutPromise) {
                 this.$timeout.cancel(previousTimeoutPromise);
             }
@@ -128,7 +128,7 @@ export default class Directive {
     bindToController = true;
     controllerAs = "vm";
     
-    link($scope: ng.IScope, element: HTMLElement, attributes: any, controller: Controller, transcludeFn: any) {
+    link($scope: ng.IScope, element: ng.IAugmentedJQuery, attributes: any, controller: Controller, transcludeFn: any) {
         controller.init(element[0]);
         
         $scope.$on('$destroy', () => {

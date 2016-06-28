@@ -1,15 +1,17 @@
+import PowerBiService from '../src/services/powerbi';
+
 describe('Integration | Component | powerbi-report: ', function() {
 
     beforeEach(function() {
         angular.mock.module("powerbi");
     });
 
-    let $compile;
-    let $rootScope;
-    let $scope;
-    let angularElement;
+    let $compile: ng.ICompileService;
+    let $rootScope: ng.IRootScopeService;
+    let $scope: any;
+    let angularElement: ng.IAugmentedJQuery;
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, PowerBiService) {
+    beforeEach(inject(function(_$compile_: ng.ICompileService, _$rootScope_: ng.IRootScopeService, PowerBiService: PowerBiService) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         

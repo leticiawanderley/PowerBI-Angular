@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
+        "outDir": "dist",
         "target": "es5",
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "sourceMap": true
     },
     "exclude": [
@@ -9,7 +10,9 @@
         "coverage",
         "jspm_packages",
         "node_modules",
-        "typings/main",
-        "typings/main.d.ts"
+        "typings/index.d.ts",
+        "test",
+        "dist",
+        "tmp"
     ]
 }

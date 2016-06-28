@@ -9,14 +9,14 @@ describe('Unit | Services | PowerBiService: ', function () {
 
     beforeEach(function () {
         angular.mock.module("powerbi.service");
-        angular.mock.module(function($provide) {
+        angular.mock.module(function($provide: ng.auto.IProvideService) {
             $provide.value('PowerBiGlobal', function() {
                 this.embed = embedSpy;
                 this.reset = resetSpy;
             });
         });
     });
-    beforeEach(inject(function (PowerBiService) {
+    beforeEach(inject(function (PowerBiService: PowerBiService) {
         powerBiService = PowerBiService;
     }));
     
