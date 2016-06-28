@@ -4,6 +4,9 @@
   "description": "Angular library which contains components to embed PowerBi visuals.",
   "main": "dist/angular-powerbi.js",
   "typings": "dist/angular-powerbi.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
