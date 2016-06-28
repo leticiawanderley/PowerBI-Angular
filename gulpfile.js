@@ -1,6 +1,7 @@
 var gulp = require('gulp-help')(require('gulp'));
 var ts = require('gulp-typescript'),
     rename = require('gulp-rename'),
+    header = require('gulp-header'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     rimraf = require('rimraf'),
@@ -12,13 +13,23 @@ var ts = require('gulp-typescript'),
     argv = require('yargs').argv
     ;
 
+var package = require('./package.json');
+var banner = "/*! <%= package.name %> v<%= package.version %> | (c) 2016 Microsoft Corporation <%= package.license %> */\n";
+
 gulp.task('build', 'Build all code for distribution', function (done) {
     runSequence(
         'clean',
         ['compile:src', 'compile:dts'],
         'min:js',
+        'header',
         done
     )
+});
+
+gulp.task('header', 'Add header to distributed files', function () {
+    return gulp.src(['!./dist/**/*.map', './dist/**/*'])
+        .pipe(header(banner, { package : package }))
+        .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('test', 'Builds all code and runs tests', function (done) {
