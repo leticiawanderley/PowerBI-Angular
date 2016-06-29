@@ -4,6 +4,9 @@ module.exports = {
     path: __dirname + "/dist",
     filename: 'angular-powerbi.js'
   },
+  externals: [
+    'powerbi-client'
+  ],
   devtool: 'source-map',
   resolve: {
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
