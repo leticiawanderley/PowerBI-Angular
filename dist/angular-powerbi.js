@@ -1,13 +1,14 @@
+/*! angular-powerbi v1.0.0-beta.4 | (c) 2016 Microsoft Corporation MIT */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("powerbi-client"));
+		module.exports = factory(require("powerbi-client"), require("angular"));
 	else if(typeof define === 'function' && define.amd)
-		define(["powerbi-client"], factory);
+		define(["powerbi-client", "angular"], factory);
 	else if(typeof exports === 'object')
-		exports["angular-powerbi"] = factory(require("powerbi-client"));
+		exports["angular-powerbi"] = factory(require("powerbi-client"), require("angular"));
 	else
-		root["angular-powerbi"] = factory(root["powerbi-client"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_4__) {
+		root["angular-powerbi"] = factory(root["powerbi-client"], root["angular"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -59,6 +60,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var component_2 = __webpack_require__(2);
 	var powerbi_1 = __webpack_require__(3);
 	exports.service = powerbi_1.default;
+	var angular = __webpack_require__(5);
 	exports.components = {
 	    report: component_1.default,
 	    component: component_2.default
@@ -344,6 +346,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
 /***/ }
 /******/ ])
