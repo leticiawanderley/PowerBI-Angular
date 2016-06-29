@@ -4,7 +4,7 @@ var ts = require('gulp-typescript'),
     header = require('gulp-header'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
-    rimraf = require('rimraf'),
+    del = require('del'),
     runSequence = require('run-sequence'),
     merge = require('merge2'),
     karma = require('karma'),
@@ -18,7 +18,7 @@ var banner = "/*! <%= package.name %> v<%= package.version %> | (c) 2016 Microso
 
 gulp.task('build', 'Build all code for distribution', function (done) {
     runSequence(
-        'clean',
+        'clean:dist',
         ['compile:src', 'compile:dts'],
         'min:js',
         'header',
@@ -34,15 +34,19 @@ gulp.task('header', 'Add header to distributed files', function () {
 
 gulp.task('test', 'Builds all code and runs tests', function (done) {
     runSequence(
-        'clean',
+        'clean:tmp',
         ['compile:src', 'compile:spec'],
-        ['test:js', 'copy', 'min:js'],
+        ['test:js'],
         done
     )
 });
 
-gulp.task('clean', 'Cleans destination folder', function(done) {
-    rimraf('./dist', done);
+gulp.task('clean:dist', 'Cleans destination folder', function() {
+    return del(['./dist']);
+});
+
+gulp.task('clean:tmp', 'Cleans tmp folder', function() {
+    return del(['./tmp']);
 });
 
 gulp.task('min:js', 'Creates minified JavaScript file', function() {
