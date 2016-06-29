@@ -1,8 +1,14 @@
+var package = require('./package.json');
+
 module.exports = {
-  entry: './src/angular-powerbi.ts',
+  entry: {
+    'angular-powerbi': './src/angular-powerbi.ts'
+  },
   output: {
     path: __dirname + "/dist",
-    filename: 'angular-powerbi.js'
+    filename: '[name].js',
+    library: package.name,
+    libraryTarget: 'umd'
   },
   externals: [
     'powerbi-client'
