@@ -1,26 +1,19 @@
-/// <reference path="../typings/browser/ambient/angular/index.d.ts" />
-
+/*! angular-powerbi v1.0.0-beta.4 | (c) 2016 Microsoft Corporation MIT */
+import reportDirective from './components/powerbi-report/component';
+import componentDirective from './components/powerbi-component/component';
+import service from './services/powerbi';
 import * as pbi from 'powerbi-client';
-
-export class Controller {
-    accessToken: string;
-    component: pbi.Embed;
-    embedUrl: string;
-    options: pbi.IEmbedOptions;
-    private powerBiService: PowerBiService;
-    private $scope: ng.IScope;
-    private $timeout: ng.ITimeoutService;
-    static $inject: string[];
-    constructor($scope: ng.IScope, $timeout: ng.ITimeoutService, powerBiService: PowerBiService);
-    init(element: HTMLElement): void;
-    private embed(element: HTMLElement): void;
-    remove(component: pbi.Embed): void;
-    private debounce(func, wait);
-}
-
-export class PowerBiService {
-    powerBiCoreService: PowerBiService;
-    constructor();
-    embed(element: HTMLElement, config: pbi.IPowerBiConfiguration): pbi.Embed;
-    remove(component: pbi.Embed): void;
+export declare const components: {
+    report: typeof reportDirective;
+    component: typeof componentDirective;
+};
+export { service };
+declare global  {
+    interface Window {
+        ['powerbi-client']: {
+            service: {
+                Service: pbi.service.Service;
+            };
+        };
+    }
 }

@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("powerbi-client"));
+	else if(typeof define === 'function' && define.amd)
+		define(["powerbi-client"], factory);
+	else if(typeof exports === 'object')
+		exports["angular-powerbi"] = factory(require("powerbi-client"));
+	else
+		root["angular-powerbi"] = factory(root["powerbi-client"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_4__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -46,12 +56,15 @@
 
 	"use strict";
 	var component_1 = __webpack_require__(1);
-	exports.reportDirective = component_1.default;
 	var component_2 = __webpack_require__(2);
 	var powerbi_1 = __webpack_require__(3);
 	exports.service = powerbi_1.default;
+	exports.components = {
+	    report: component_1.default,
+	    component: component_2.default
+	};
 	angular.module('powerbi.global', [])
-	    .value('PowerBiGlobal', window.Powerbi);
+	    .value('PowerBiGlobal', window['powerbi-client'].service.Service);
 	angular.module('powerbi.service', [
 	    'powerbi.global'
 	])
@@ -128,7 +141,9 @@
 	        var config = {
 	            type: 'report',
 	            embedUrl: this.embedUrl,
-	            accessToken: this.accessToken
+	            accessToken: this.accessToken,
+	            id: this.reportId,
+	            uniqueId: this.name
 	        };
 	        angular.extend(config, this.options);
 	        this.component = this.powerBiService.embed(element, config);
@@ -178,6 +193,8 @@
 	        this.scope = {
 	            accessToken: "=",
 	            embedUrl: "=",
+	            reportId: "=?",
+	            name: "=?",
 	            options: "=?"
 	        };
 	        this.controller = Controller;
@@ -299,12 +316,13 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var pbi = __webpack_require__(4);
 	var PowerBiService = (function () {
 	    function PowerBiService(PowerBi) {
-	        this.powerBiCoreService = new PowerBi();
+	        this.powerBiCoreService = new PowerBi(pbi.factories.hpmFactory, pbi.factories.wpmpFactory, pbi.factories.routerFactory);
 	    }
 	    PowerBiService.prototype.embed = function (element, config) {
 	        return this.powerBiCoreService.embed(element, config);
@@ -321,6 +339,14 @@
 	exports.default = PowerBiService;
 
 
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
+
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;
 //# sourceMappingURL=angular-powerbi.js.map
