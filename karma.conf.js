@@ -9,13 +9,12 @@ module.exports = function (config) {
             './node_modules/angular-mocks/angular-mocks.js',
             './node_modules/powerbi-client/dist/powerbi.js',
             './dist/angular-powerbi.js',
-            './src/**/*.spec.js',
-            './test/**/*.spec.js'
+            './tmp/**/*.spec.js'
         ],
         exclude: [],
         reporters: argv.debug ? ['spec'] : ['spec', 'coverage'],
         autoWatch: true,
-        browsers: [argv.debug ? 'Chrome' : 'PhantomJS'],
+        browsers: [argv.chrome ? 'Chrome' : 'PhantomJS'],
         plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',

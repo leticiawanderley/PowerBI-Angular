@@ -29,7 +29,9 @@ describe('Unit | Component | powerbi-report: ', function() {
         $scope = $rootScope.$new();
         $scope.testData = {
             accessToken: "fakeToken",
-            embedUrl: "fakeEmbedUrl"
+            embedUrl: "fakeEmbedUrl",
+            reportId: "fakeReportId",
+            name: "fakeReportName"
         };
     }));
 
@@ -50,11 +52,13 @@ describe('Unit | Component | powerbi-report: ', function() {
             const expectedConfig = {
                 type: 'report',
                 embedUrl: $scope.testData.embedUrl,
-                accessToken: $scope.testData.accessToken
+                accessToken: $scope.testData.accessToken,
+                id: $scope.testData.reportId,
+                uniqueId: $scope.testData.name
             };
             
             // Act 
-            angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
+            angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl" report-id="testData.reportId" name="testData.name"></powerbi-report>')($scope);
             $scope.$digest();
 
             // Assert

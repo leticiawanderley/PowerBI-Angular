@@ -3,10 +3,4 @@ jspm_packages/
 node_modules/
 coverage/
 typings/
-
-src/*.js
-src/*/*.js
-src/*/*/*.js
-
-test/*.js
-test/*/*.js
+tmp/

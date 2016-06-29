@@ -11,14 +11,15 @@ describe('Integration | Component | powerbi-report: ', function() {
     let $scope: any;
     let angularElement: ng.IAugmentedJQuery;
 
-    beforeEach(inject(function(_$compile_: ng.ICompileService, _$rootScope_: ng.IRootScopeService, PowerBiService: PowerBiService) {
+    beforeEach(inject(function(_$compile_: ng.ICompileService, _$rootScope_: ng.IRootScopeService) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         
         $scope = $rootScope.$new();
         $scope.testData = {
             accessToken: "fakeToken",
-            embedUrl: "fakeEmbedUrl"
+            embedUrl: "fakeEmbedUrl",
+            id: "fakeReportId"
         };
     }));
 
@@ -26,7 +27,7 @@ describe('Integration | Component | powerbi-report: ', function() {
         // Arrange
         
         // Act 
-        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl"></powerbi-report>')($scope);
+        angularElement = $compile('<powerbi-report access-token="testData.accessToken" embed-url="testData.embedUrl" report-id="testData.id"></powerbi-report>')($scope);
         $scope.$digest();
 
         // Assert

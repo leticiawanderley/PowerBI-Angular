@@ -1,6 +1,7 @@
 import reportDirective from './components/powerbi-report/component';
 import componentDirective from './components/powerbi-component/component';
 import service from './services/powerbi';
+import * as pbi from 'powerbi-client';
 
 export const components = {
     report: reportDirective,
@@ -11,8 +12,18 @@ export {
     service
 }
 
+declare global {
+    interface Window {
+        ['powerbi-client']: {
+            service: {
+                Service: pbi.service.Service
+            }
+        }
+    }
+}
+
 angular.module('powerbi.global', [])
-    .value('PowerBiGlobal', window.Powerbi)
+    .value('PowerBiGlobal', window['powerbi-client'].service.Service)
     ;
 
 angular.module('powerbi.service', [

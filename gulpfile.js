@@ -96,6 +96,6 @@ gulp.task('compile:spec', 'Compile typescript for tests', function () {
 gulp.task('test:js', 'Runs unit tests', function(done) {
     new karma.Server.start({
         configFile: __dirname + '/karma.conf.js',
-        singleRun: argv.debug ? false : true
+        singleRun: argv.watch ? false : true
     }, done);
 });
