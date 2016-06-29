@@ -53,57 +53,5 @@
   },
   "publishConfig": {
     "tag": "beta"
-  },
-  "jspm": {
-    "name": "angular-powerbi",
-    "main": "angular-powerbi.js",
-    "version": "1.0.0-beta.2",
-    "registry": "npm",
-    "dependencies": {
-      "angular": "^1.5.3",
-      "powerbi-client": "2.0.0-beta.6"
-    },
-    "devDependencies": {
-      "plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.5"
-    },
-    "peerDependencies": {
-      "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
-      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
-    },
-    "overrides": {
-      "npm:angular@1.5.5": {
-        "format": "global",
-        "jspmNodeConversion": false,
-        "main": "angular",
-        "meta": {
-          "angular.js": {
-            "exports": "angular",
-            "format": "global"
-          }
-        }
-      },
-      "npm:typescript@1.8.9": {
-        "browser": {},
-        "map": {
-          "buffer": "@empty",
-          "child_process": "@empty",
-          "fs": "@empty",
-          "path": "@empty",
-          "process": "@empty",
-          "readline": "@empty"
-        }
-      }
-    },
-    "directories": {
-      "dist": "dist"
-    },
-    "files": [
-      "dist"
-    ],
-    "ignore": [
-      "node_modules",
-      "jspm_packages",
-      "typings"
-    ]
   }
 }
