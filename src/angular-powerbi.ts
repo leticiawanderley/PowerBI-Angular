@@ -2,6 +2,7 @@ import reportDirective from './components/powerbi-report/component';
 import componentDirective from './components/powerbi-component/component';
 import service from './services/powerbi';
 import * as pbi from 'powerbi-client';
+import * as angular from 'angular';
 
 export const components = {
     report: reportDirective,

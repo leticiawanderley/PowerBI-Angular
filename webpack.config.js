@@ -11,6 +11,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
   externals: [
+    'angular',
     'powerbi-client'
   ],
   devtool: 'source-map',
