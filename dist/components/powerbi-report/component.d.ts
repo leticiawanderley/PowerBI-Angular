@@ -1,4 +1,4 @@
-/*! angular-powerbi v1.0.0-beta.4 | (c) 2016 Microsoft Corporation MIT */
+/*! angular-powerbi v1.0.0-beta.5 | (c) 2016 Microsoft Corporation MIT */
 import * as pbi from 'powerbi-client';
 import * as models from 'powerbi-models';
 import PowerBiService from '../../services/powerbi';
