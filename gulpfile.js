@@ -51,9 +51,7 @@ gulp.task('clean:tmp', 'Cleans tmp folder', function() {
 
 gulp.task('min:js', 'Creates minified JavaScript file', function() {
     return gulp.src('./dist/angular-powerbi.js')
-        .pipe(sourcemaps.init({ debug: true }))
         .pipe(uglify())
-        .pipe(sourcemaps.write())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./dist'));
 });
