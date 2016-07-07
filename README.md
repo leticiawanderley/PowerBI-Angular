@@ -27,7 +27,7 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
 	2. Generic Component
 	
 		```
-		<powerbi-component component="vm.report"></powerbi-component>
+		<powerbi-component options="vm.report"></powerbi-component>
 		```
     
 ## Getting started
@@ -52,7 +52,7 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
 	]);
 	```
 
-3. Fetch data to embed a visual from the server (embedUrl and accessToken) and make it available on controller scope.
+3. Fetch embed data from the server (embedUrl and accessToken) and make it available on controller scope.
 
 	This would likely require using a factory or service to fetch report data from your local server.	
 	Example where the report is resolved when entering route:
