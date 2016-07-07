@@ -8,6 +8,7 @@ export class Controller {
     embedUrl: string;
     reportId: string;
     name: string;
+    onEmbedded: Function;
     options: models.ISettings;
     private powerBiService: PowerBiService;
     private $scope: ng.IScope;
@@ -81,6 +82,7 @@ export class Controller {
         angular.extend(config, this.options);
         
         this.component = this.powerBiService.embed(element, config);
+        this.onEmbedded({ $embed: this.component });
     }
     
     /**
@@ -122,7 +124,8 @@ export default class Directive {
         embedUrl: "=",
         reportId: "=?",
         name: "=?",
-        options: "=?"
+        options: "=?",
+        onEmbedded: "&"
     };
     controller = Controller;
     bindToController = true;

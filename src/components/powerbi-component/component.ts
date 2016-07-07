@@ -4,6 +4,7 @@ import PowerBiService from '../../services/powerbi';
 export class Controller {
     component: pbi.Embed;
     options: pbi.IEmbedConfiguration;
+    onEmbedded: Function;
     validationMap: any;
     private powerBiService: PowerBiService;
     private $scope: ng.IScope;
@@ -51,6 +52,7 @@ export class Controller {
      */
     private embed(element: HTMLElement, options: pbi.IEmbedConfiguration) {
         this.component = this.powerBiService.embed(element, options);
+        this.onEmbedded({ $embed: this.component });
     }
     
     /**
@@ -93,7 +95,8 @@ export default class Directive {
     scope = {
         accessToken: "=",
         embedUrl: "=",
-        options: "=?"
+        options: "=?",
+        onEmbedded: "&"
     };
     controller = Controller;
     bindToController = true;

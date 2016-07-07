@@ -1,13 +1,14 @@
 import PowerBiService from '../../services/powerbi';
 
 describe('Unit | Component | powerbi-component: ', function() {
+    let fakeEmbedInstance = { fakeComponent: true };
 
     beforeEach(function() {
         angular.mock.module("powerbi.components.powerbiComponent");
         angular.mock.module(function($provide: ng.auto.IProvideService) {
             // TODO: Look at using $provide.factory to allow creation of spy objects instead.
             $provide.service('PowerBiService', function() {
-                this.embed = jasmine.createSpy("PowerBiService.embed").and.returnValue({ fakeComponent: true });
+                this.embed = jasmine.createSpy("PowerBiService.embed").and.returnValue(fakeEmbedInstance);
                 this.reset = jasmine.createSpy("PowerBiService.reset");
             });
         });
@@ -32,6 +33,7 @@ describe('Unit | Component | powerbi-component: ', function() {
             accessToken: "fakeToken",
             embedUrl: "fakeEmbedUrl"
         };
+        $scope.onEmbedded = jasmine.createSpy('embeddedSpy');
     }));
 
     it('renders', function() {
@@ -80,7 +82,24 @@ describe('Unit | Component | powerbi-component: ', function() {
             // Assert
             expect(powerBiServiceMock.embed).toHaveBeenCalled();
         });
-    })
+
+        it('invokes the onEmbedded callback after embed is called', function () {
+            // Arrange
+            const expectedConfig = {
+                type: 'report',
+                embedUrl: $scope.testData.embedUrl,
+                accessToken: $scope.testData.accessToken
+            };
+            
+            // Act 
+            angularElement = $compile('<powerbi-component options="testData" on-embedded="onEmbedded($embed)"></powerbi-component>')($scope);
+            $scope.$digest();
+
+            // Assert
+            expect(powerBiServiceMock.embed).toHaveBeenCalledWith(angularElement[0], expectedConfig);
+            expect($scope.onEmbedded).toHaveBeenCalledWith(fakeEmbedInstance);
+        });
+    });
     
     describe('reset', function () {
         it('calls the internal powerBiService.reset before component is removed from DOM ($scope is destroyed)', function () {
