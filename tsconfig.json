@@ -8,7 +8,6 @@
     "exclude": [
         "bower_components",
         "coverage",
-        "jspm_packages",
         "node_modules",
         "typings/index.d.ts",
         "test",
