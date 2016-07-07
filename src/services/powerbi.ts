@@ -15,6 +15,14 @@ export default class PowerBiService {
     embed(element: HTMLElement, config: pbi.IEmbedConfiguration): pbi.Embed {
         return this.powerBiCoreService.embed(element, config);
     }
+
+    get(element: HTMLElement): pbi.Embed {
+        return this.powerBiCoreService.get(element);
+    }
+
+    find(uniqueId: string): pbi.Report | pbi.Tile {
+        return this.powerBiCoreService.find(uniqueId);
+    }
     
     reset(element: HTMLElement): void {
         this.powerBiCoreService.reset(element);
