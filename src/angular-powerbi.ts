@@ -13,18 +13,8 @@ export {
     service
 }
 
-declare global {
-    interface Window {
-        ['powerbi-client']: {
-            service: {
-                Service: pbi.service.Service
-            }
-        }
-    }
-}
-
 angular.module('powerbi.global', [])
-    .value('PowerBiGlobal', window['powerbi-client'].service.Service)
+    .value('PowerBiGlobal', window.powerbi)
     ;
 
 angular.module('powerbi.service', [
