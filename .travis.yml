@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+- node
+install:
+- npm install -g typings typescript bower
+- npm link typescript
+- typings install
+- npm install
+- bower install
+script:
+- gulp test
+deploy:
+  provider: npm
+  email: nugetpowerbi@microsoft.com
+  api_key:
+    secure: Jur+Zgx/89FRHQOEjGjiyTDbl4vz86m+zW+5VT6SujCNPKLdpjUKckwcyd7hjsMb48r8M7bbV+L3mLuWalh4rvl0Fzzdcfv97EihBpQlxg+txZk5uDB+bE0GllVQuCSjvFsjy2HNGUSHSCtr0uKHbOba0ccHSTR1E8Hqz6qm3vR1cH9CI4FNxqkOc9QJGdLHSxTMzGXdJsIkWdtKy0ZoSQiIVa0+HE/9X4Yk5xruyRESWz1VGOab5rIswRGfS4GwHhCjhxxr0Ak+GoxgpUm2qe8wQO6PhSudXK4FOKOVScq3Sg8KVXWESPFr25z32r7wvghWpkfkWy2s5zkPgLutxBopjCmYXAC6DvkOI/vvtr784+wAHMCXz7ZTTQzWnDiZIw1KbsZolhXlWi5PQJkr4Q3zr9pBjD2fzF97EdKN4ZgYKfDqru9suACeRXH23vqYqEXWh2yknaTE9plnu5bOagQjFVZgEtR6MQfIaybKVsWNrNpUKSUNKSYH4sICvQDTOCygp6l5fXBm0R9OZuu3R0u6CR/vDVTDZYWVdL5Qi9z4MYy7AljtSJaUEhi+TBVLeQS1CzxEFWcGPYDs2EuLxTioHYhL50GprTYfU7KE9gCYSk9E6QLK3MC6Hffl/Per5TZb5u2Byj8aEqj/h7K1bVkC4WCOXjMvJuLOW4n528k=
+  on:
+    tags: true
+    repo: Microsoft/powerbi-angular
+    branch: dev
