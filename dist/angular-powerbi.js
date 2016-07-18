@@ -1,14 +1,14 @@
-/*! angular-powerbi v1.0.0-beta.5 | (c) 2016 Microsoft Corporation MIT */
+/*! angular-powerbi v1.0.0-beta.6 | (c) 2016 Microsoft Corporation MIT */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("powerbi-client"), require("angular"));
+		module.exports = factory(require("angular"));
 	else if(typeof define === 'function' && define.amd)
-		define(["powerbi-client", "angular"], factory);
+		define(["angular"], factory);
 	else if(typeof exports === 'object')
-		exports["angular-powerbi"] = factory(require("powerbi-client"), require("angular"));
+		exports["angular-powerbi"] = factory(require("angular"));
 	else
-		root["angular-powerbi"] = factory(root["powerbi-client"], root["angular"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__) {
+		root["angular-powerbi"] = factory(root["angular"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_4__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -60,13 +60,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var component_2 = __webpack_require__(2);
 	var powerbi_1 = __webpack_require__(3);
 	exports.service = powerbi_1.default;
-	var angular = __webpack_require__(5);
+	var angular = __webpack_require__(4);
 	exports.components = {
 	    report: component_1.default,
 	    component: component_2.default
 	};
 	angular.module('powerbi.global', [])
-	    .value('PowerBiGlobal', window['powerbi-client'].service.Service);
+	    .value('PowerBiGlobal', window.powerbi);
 	angular.module('powerbi.service', [
 	    'powerbi.global'
 	])
@@ -149,6 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	        angular.extend(config, this.options);
 	        this.component = this.powerBiService.embed(element, config);
+	        this.onEmbedded({ $embed: this.component });
 	    };
 	    /**
 	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
@@ -197,7 +198,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            embedUrl: "=",
 	            reportId: "=?",
 	            name: "=?",
-	            options: "=?"
+	            options: "=?",
+	            onEmbedded: "&"
 	        };
 	        this.controller = Controller;
 	        this.bindToController = true;
@@ -255,6 +257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    Controller.prototype.embed = function (element, options) {
 	        this.component = this.powerBiService.embed(element, options);
+	        this.onEmbedded({ $embed: this.component });
 	    };
 	    /**
 	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
@@ -298,7 +301,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.scope = {
 	            accessToken: "=",
 	            embedUrl: "=",
-	            options: "=?"
+	            options: "=?",
+	            onEmbedded: "&"
 	        };
 	        this.controller = Controller;
 	        this.bindToController = true;
@@ -318,16 +322,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	"use strict";
-	var pbi = __webpack_require__(4);
 	var PowerBiService = (function () {
-	    function PowerBiService(PowerBi) {
-	        this.powerBiCoreService = new PowerBi(pbi.factories.hpmFactory, pbi.factories.wpmpFactory, pbi.factories.routerFactory);
+	    function PowerBiService(powerbi) {
+	        this.powerBiCoreService = powerbi;
 	    }
 	    PowerBiService.prototype.embed = function (element, config) {
 	        return this.powerBiCoreService.embed(element, config);
+	    };
+	    PowerBiService.prototype.get = function (element) {
+	        return this.powerBiCoreService.get(element);
+	    };
+	    PowerBiService.prototype.find = function (uniqueId) {
+	        return this.powerBiCoreService.find(uniqueId);
 	    };
 	    PowerBiService.prototype.reset = function (element) {
 	        this.powerBiCoreService.reset(element);
@@ -346,12 +355,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
 /***/ }
 /******/ ])

@@ -1,4 +1,4 @@
-/*! angular-powerbi v1.0.0-beta.5 | (c) 2016 Microsoft Corporation MIT */
+/*! angular-powerbi v1.0.0-beta.6 | (c) 2016 Microsoft Corporation MIT */
 import * as pbi from 'powerbi-client';
 import * as models from 'powerbi-models';
 import PowerBiService from '../../services/powerbi';
@@ -8,6 +8,7 @@ export declare class Controller {
     embedUrl: string;
     reportId: string;
     name: string;
+    onEmbedded: Function;
     options: models.ISettings;
     private powerBiService;
     private $scope;
@@ -43,6 +44,7 @@ export default class Directive {
         reportId: string;
         name: string;
         options: string;
+        onEmbedded: string;
     };
     controller: typeof Controller;
     bindToController: boolean;
