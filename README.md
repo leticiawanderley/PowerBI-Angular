@@ -1,4 +1,5 @@
 # angular-powerbi
+[![Build Status](https://travis-ci.org/Microsoft/PowerBI-Angular.svg?branch=dev)](https://travis-ci.org/Microsoft/PowerBI-Angular)
 
 Angular module which wraps PowerBI-JavaScript as service and adds a collection of components for each embedded type (Currently only Report is supported) which you can use to easily embed Power BI visuals within your Angular applications.
 
