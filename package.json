@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "prepublish": "gulp build",
+    "version": "gulp build && git add .",
     "test": "gulp test --chrome"
   },
   "keywords": [
