@@ -1,4 +1,4 @@
-/*! angular-powerbi v1.0.0-beta.6 | (c) 2016 Microsoft Corporation MIT */
+/*! angular-powerbi v1.0.0-beta.7 | (c) 2016 Microsoft Corporation MIT */
 import * as pbi from 'powerbi-client';
 export default class PowerBiService {
     private powerBiCoreService;
