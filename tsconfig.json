@@ -1,17 +1,17 @@
 {
-    "compilerOptions": {
-        "outDir": "dist",
-        "target": "es5",
-        "noImplicitAny": true,
-        "sourceMap": true
-    },
-    "exclude": [
-        "bower_components",
-        "coverage",
-        "node_modules",
-        "typings/index.d.ts",
-        "test",
-        "dist",
-        "tmp"
-    ]
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es5",
+    "noImplicitAny": true,
+    "sourceMap": true
+  },
+  "exclude": [
+    "bower_components",
+    "coverage",
+    "node_modules",
+    "typings/index.d.ts",
+    "test",
+    "dist",
+    "tmp"
+  ]
 }

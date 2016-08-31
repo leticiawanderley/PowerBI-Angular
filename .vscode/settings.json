@@ -8,7 +8,7 @@
     "**/bower_components": true,
     "typings/**/*": true
   },
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
   "editor.detectIndentation": false,
   "editor.renderIndentGuides": true
 }

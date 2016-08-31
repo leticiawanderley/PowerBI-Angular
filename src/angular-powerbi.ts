@@ -4,44 +4,44 @@ import service from './services/powerbi';
 import * as angular from 'angular';
 
 export const components = {
-    report: reportDirective,
-    component: componentDirective
+  report: reportDirective,
+  component: componentDirective
 };
 
 export {
-    service
+  service
 }
 
 angular.module('powerbi.global', [])
-    .value('PowerBiGlobal', window.powerbi)
-    ;
+  .value('PowerBiGlobal', window.powerbi)
+  ;
 
 angular.module('powerbi.service', [
-    'powerbi.global'
+  'powerbi.global'
 ])
-    .service('PowerBiService' /* service.name */, service)
-    ;
+  .service('PowerBiService' /* service.name */, service)
+  ;
 
 angular.module('powerbi.components.powerbiReport', [
-    'powerbi.service'
+  'powerbi.service'
 ])
-    // Attempt to use name from class, but there is error in Phantom
-    // 'TypeError: Attempted to assign to readonly property.'
-    .directive('powerbiReport' /* reportDirective.name */, () => new reportDirective())
-    ;
+  // Attempt to use name from class, but there is error in Phantom
+  // 'TypeError: Attempted to assign to readonly property.'
+  .directive('powerbiReport' /* reportDirective.name */, () => new reportDirective())
+  ;
 
 angular.module('powerbi.components.powerbiComponent', [
-    'powerbi.service'
+  'powerbi.service'
 ])
-    .directive('powerbiComponent' /* componentDirective.name */, () => new componentDirective())
-    ;
+  .directive('powerbiComponent' /* componentDirective.name */, () => new componentDirective())
+  ;
 
 angular.module('powerbi.components', [
-    'powerbi.components.powerbiReport',
-    'powerbi.components.powerbiComponent'
+  'powerbi.components.powerbiReport',
+  'powerbi.components.powerbiComponent'
 ]);
 
 angular.module('powerbi', [
-    'powerbi.service',
-    'powerbi.components'
+  'powerbi.service',
+  'powerbi.components'
 ]);
