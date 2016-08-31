@@ -1,13 +1,12 @@
 import reportDirective from './components/powerbi-report/component';
 import componentDirective from './components/powerbi-component/component';
 import service from './services/powerbi';
-import * as pbi from 'powerbi-client';
 import * as angular from 'angular';
 
 export const components = {
     report: reportDirective,
     component: componentDirective
-}
+};
 
 export {
     service
@@ -30,7 +29,7 @@ angular.module('powerbi.components.powerbiReport', [
     // 'TypeError: Attempted to assign to readonly property.'
     .directive('powerbiReport' /* reportDirective.name */, () => new reportDirective())
     ;
-    
+
 angular.module('powerbi.components.powerbiComponent', [
     'powerbi.service'
 ])
@@ -40,7 +39,7 @@ angular.module('powerbi.components.powerbiComponent', [
 angular.module('powerbi.components', [
     'powerbi.components.powerbiReport',
     'powerbi.components.powerbiComponent'
-]); 
+]);
 
 angular.module('powerbi', [
     'powerbi.service',

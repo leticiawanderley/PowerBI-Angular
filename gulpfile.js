@@ -8,6 +8,7 @@ var ts = require('gulp-typescript'),
     runSequence = require('run-sequence'),
     merge = require('merge2'),
     karma = require('karma'),
+    tslint = require('gulp-tslint'),
     webpack = require('webpack-stream'),
     webpackConfig = require('./webpack.config'),
     argv = require('yargs').argv
@@ -18,6 +19,7 @@ var banner = "/*! <%= package.name %> v<%= package.version %> | (c) 2016 Microso
 
 gulp.task('build', 'Build all code for distribution', function (done) {
     runSequence(
+        'tslint:build',
         'clean:dist',
         ['compile:src', 'compile:dts'],
         'min:js',
@@ -28,12 +30,13 @@ gulp.task('build', 'Build all code for distribution', function (done) {
 
 gulp.task('header', 'Add header to distributed files', function () {
     return gulp.src(['!./dist/**/*.map', './dist/**/*'])
-        .pipe(header(banner, { package : package }))
+        .pipe(header(banner, { package: package }))
         .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('test', 'Builds all code and runs tests', function (done) {
     runSequence(
+        'tslint:test',
         'clean:tmp',
         ['compile:src', 'compile:spec'],
         ['test:js'],
@@ -41,22 +44,22 @@ gulp.task('test', 'Builds all code and runs tests', function (done) {
     )
 });
 
-gulp.task('clean:dist', 'Cleans destination folder', function() {
+gulp.task('clean:dist', 'Cleans destination folder', function () {
     return del(['./dist']);
 });
 
-gulp.task('clean:tmp', 'Cleans tmp folder', function() {
+gulp.task('clean:tmp', 'Cleans tmp folder', function () {
     return del(['./tmp']);
 });
 
-gulp.task('min:js', 'Creates minified JavaScript file', function() {
+gulp.task('min:js', 'Creates minified JavaScript file', function () {
     return gulp.src('./dist/angular-powerbi.js')
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('compile:src', 'Compile typescript for library', function() {
+gulp.task('compile:src', 'Compile typescript for library', function () {
     return gulp.src(['./src/angular-powerbi.ts'])
         .pipe(webpack(webpackConfig))
         .pipe(gulp.dest('dist/'));
@@ -70,7 +73,7 @@ gulp.task('compile:dts', 'Generate dts files from modules', function () {
 
     var tsResult = gulp.src(['./typings/globals/**/*.d.ts', '!./src/**/*.spec.ts', './src/**/*.ts'])
         .pipe(ts(tsProject));
-    
+
     return tsResult.dts
         .pipe(gulp.dest('./dist'));
 });
@@ -80,20 +83,40 @@ gulp.task('compile:spec', 'Compile typescript for tests', function () {
     var unitTestResult = gulp.src(['./typings/globals/**/*.d.ts', './src/**/*.spec.ts'])
         .pipe(ts(unitTestProject));
     var unitTestStream = unitTestResult.js.pipe(gulp.dest('./tmp'));
-    
+
     var e2eTestProject = ts.createProject('tsconfig.json');
     var e2eTestResult = gulp.src(['./typings/globals/**/*.d.ts', './test/**/*.spec.ts'])
         .pipe(ts(e2eTestProject));
     var e2eTestStream = e2eTestResult.js.pipe(gulp.dest('./tmp'));
-    
+
     return merge(
         [unitTestStream, e2eTestStream]
     );
 });
 
-gulp.task('test:js', 'Runs unit tests', function(done) {
+gulp.task('test:js', 'Runs unit tests', function (done) {
     new karma.Server.start({
         configFile: __dirname + '/karma.conf.js',
         singleRun: argv.watch ? false : true
     }, done);
+});
+
+gulp.task('tslint:build', 'Run TSLint on src', function () {
+    return gulp.src(["src/**/*.ts"])
+        .pipe(tslint({
+            formatter: "verbose"
+        }))
+        .pipe(tslint.report({
+            summarizeFailureOutput: true
+        }));
+});
+
+gulp.task('tslint:test', 'Run TSLint on src and tests', function () {
+    return gulp.src(["src/**/*.ts", "test/**/*.ts"])
+        .pipe(tslint({
+            formatter: "verbose"
+        }))
+        .pipe(tslint.report({
+            summarizeFailureOutput: true
+        }));
 });
