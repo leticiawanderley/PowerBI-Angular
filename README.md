@@ -9,7 +9,7 @@ Angular module which wraps PowerBI-JavaScript as service and adds a collection o
 
 ## Demo
 
-http://powerbiangular.azurewebsites.net/dist
+http://azure-samples.github.io/powerbi-angular-client
 
 Source: https://github.com/Azure-Samples/powerbi-angular-client
 
@@ -75,7 +75,7 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
 
 	If you need a sample server to test you can use the following:
 	
-	- Live example: http://powerbipaasapi.azurewebsites.net/
+	- Live example: https://powerbiembedapi.azurewebsites.net/
 	- C# Sample Server: https://github.com/Azure-Samples/powerbi-dotnet-server-aspnet-web-api
 	- Nodejs Sample Server: (COMING SOON)
 
