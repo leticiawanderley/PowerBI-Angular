@@ -1,4 +1,4 @@
-/*! angular-powerbi v1.0.0-beta.7 | (c) 2016 Microsoft Corporation MIT */
+/*! angular-powerbi v1.0.0 | (c) 2016 Microsoft Corporation MIT */
 import * as pbi from 'powerbi-client';
 import * as models from 'powerbi-models';
 import PowerBiService from '../../services/powerbi';
@@ -21,13 +21,13 @@ export declare class Controller {
      */
     init(element: HTMLElement): void;
     /**
-     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
-     */
-    private embed(element);
-    /**
      * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
      */
     reset(element: HTMLElement): void;
+    /**
+     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
+     */
+    private embed(element);
     private debounce(func, wait);
     /**
      * Ensure required attributes (embedUrl and accessToken are valid before attempting to embed)

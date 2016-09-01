@@ -1,4 +1,4 @@
-/*! angular-powerbi v1.0.0-beta.7 | (c) 2016 Microsoft Corporation MIT */
+/*! angular-powerbi v1.0.0 | (c) 2016 Microsoft Corporation MIT */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("angular"));
@@ -95,6 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var Controller = (function () {
+	    /* tslint:enable:member-ordering */
 	    function Controller($scope, $timeout, powerBiService) {
 	        this.$scope = $scope;
 	        this.$timeout = $timeout;
@@ -137,6 +138,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    };
 	    /**
+	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
+	     */
+	    Controller.prototype.reset = function (element) {
+	        this.powerBiService.reset(element);
+	        this.component = null;
+	    };
+	    /**
 	     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
 	     */
 	    Controller.prototype.embed = function (element) {
@@ -150,13 +158,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        angular.extend(config, this.options);
 	        this.component = this.powerBiService.embed(element, config);
 	        this.onEmbedded({ $embed: this.component });
-	    };
-	    /**
-	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
-	     */
-	    Controller.prototype.reset = function (element) {
-	        this.powerBiService.reset(element);
-	        this.component = null;
 	    };
 	    Controller.prototype.debounce = function (func, wait) {
 	        var _this = this;
@@ -179,6 +180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return (typeof this.embedUrl === 'string' && this.embedUrl.length > 0)
 	            && (typeof this.accessToken === 'string' && this.accessToken.length > 0);
 	    };
+	    /* tslint:disable:member-ordering */
 	    Controller.$inject = [
 	        '$scope',
 	        '$timeout',
@@ -223,6 +225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var Controller = (function () {
+	    /* tslint:enable:member-ordering */
 	    function Controller($scope, powerBiService) {
 	        this.$scope = $scope;
 	        this.powerBiService = powerBiService;
@@ -253,18 +256,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }, true);
 	    };
 	    /**
-	     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
-	     */
-	    Controller.prototype.embed = function (element, options) {
-	        this.component = this.powerBiService.embed(element, options);
-	        this.onEmbedded({ $embed: this.component });
-	    };
-	    /**
 	     * Handler when component is removed from DOM. Forwards call to service to perform cleanup of references before DOM is modified.
 	     */
 	    Controller.prototype.reset = function (element) {
 	        this.powerBiService.reset(element);
 	        this.component = null;
+	    };
+	    /**
+	     * Given an HTMLElement, construct an embed configuration based on attributes and pass to service.
+	     */
+	    Controller.prototype.embed = function (element, options) {
+	        this.component = this.powerBiService.embed(element, options);
+	        this.onEmbedded({ $embed: this.component });
 	    };
 	    /**
 	     * Ensure required options (embedUrl and accessToken are valid before attempting to embed)
@@ -285,6 +288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Controller.prototype.validateReportOptions = function (options) {
 	        return true;
 	    };
+	    /* tslint:disable:member-ordering */
 	    Controller.$inject = [
 	        '$scope',
 	        'PowerBiService'
@@ -326,6 +330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var PowerBiService = (function () {
+	    /* tslint:enable:member-ordering */
 	    function PowerBiService(powerbi) {
 	        this.powerBiCoreService = powerbi;
 	    }
@@ -341,6 +346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    PowerBiService.prototype.reset = function (element) {
 	        this.powerBiCoreService.reset(element);
 	    };
+	    /* tslint:disable:member-ordering */
 	    PowerBiService.$inject = [
 	        'PowerBiGlobal'
 	    ];
