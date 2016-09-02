@@ -22,6 +22,7 @@
     "embedded",
     "visuals"
   ],
+  "homepage": "http://azure-samples.github.io/powerbi-angular-client",
   "repository": "https://github.com/Microsoft/PowerBI-Angular",
   "author": "Microsoft PowerBI Team",
   "license": "MIT",
