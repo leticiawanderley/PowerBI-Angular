@@ -22,6 +22,7 @@
     "embedded",
     "visuals"
   ],
+  "repository": "https://github.com/Microsoft/PowerBI-Angular",
   "author": "Microsoft PowerBI Team",
   "license": "MIT",
   "dependencies": {
