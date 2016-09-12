@@ -43,17 +43,20 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
 	npm install -save angular-powerbi
 	```
 
-1. Include the `angular-powerbi.js` file within your app:
+1. Include the `powerbi.js` and the `angular-powerbi.js` file within your app:
+
+	Below we're using absolute urls to npmcdn but you could also use relative urls to local files in `node_modules` or bundle the two scripts with the rest of your vendor scripts.
 
 	```
-	<script src="angular-powerbi.js"></script>
+	<script src="https://npmcdn.com/powerbi-client@2.0.0"></script>
+	<script src="https://npmcdn.com/angular-powerbi@1.0.0"></script>
 	```
 
 2. Include the 'powerbi' module as a dependency of your app:
 
 	```
 	app.module('app', [
-		'powerbi'
+	  'powerbi'
 	]);
 	```
 
