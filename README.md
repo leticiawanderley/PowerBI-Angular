@@ -80,7 +80,7 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
 	
 	- Live example: https://powerbiembedapi.azurewebsites.net/
 	- C# Sample Server: https://github.com/Azure-Samples/powerbi-dotnet-server-aspnet-web-api
-	- Nodejs Sample Server: (COMING SOON)
+	- Nodejs Sample Server: [https://github.com/Azure-Samples/powerbi-node-server-express](https://github.com/Azure-Samples/powerbi-node-server-express)
 
 4. Insert the component in your template where you want to embed the visual:
 	
