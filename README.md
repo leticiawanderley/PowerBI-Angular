@@ -97,7 +97,8 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
     For example, to add an advanced filter that filters the users by age, when they are 50 years old or older, or younger than 20 years old, 
     you should do:
     ```
-    const advancedFilter: pbi.models.IAdvancedFilter = {$schema: "http://powerbi.com/product/schema#advanced",
+    const advancedFilter: pbi.models.IAdvancedFilter = {
+      $schema: "http://powerbi.com/product/schema#advanced",
       target: {
         table: "Users",
         column: "Age"
