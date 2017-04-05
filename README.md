@@ -87,6 +87,41 @@ Source: https://github.com/Azure-Samples/powerbi-angular-client
 	```
 	<powerbi-report embed-url="vm.report.embedUrl" access-token="vm.report.accessToken" options="vm.reportOptions"></powerbi-report>
 	```
-	
+
+5. Add filters:
+  In order to add filters to the directive you need to make them available to thee directive's scope by sending them through ```options```.
+  The filters have to be structured as explained [here](https://powerbi.microsoft.com/en-us/blog/intro-pbi-js-api/).
+
+  For example, to add an advanced filter that filters the users by age, when they are 50 years old or older, or younger than 20 years old, 
+  you should do:
+  ```
+  const advancedFilter: pbi.models.IAdvancedFilter = {
+    $schema: "http://powerbi.com/product/schema#advanced",
+    target: {
+      table: "Users",
+      column: "Age"
+    },
+    logicalOperator: "Or",
+    conditions: [
+      {
+        operator: "GreaterThanOrEqual",
+        value: 50
+      },
+      {
+        operator: "LessThan",
+        value: 20
+      }
+    ]
+  }
+  ```
+
+  You should add your filters to an array and this array to the object that is sent to the directive.
+  ```
+  var filters = [];
+  filters.push(advancedFilter);
+  vm.reportOptions = {
+    "filters": filters
+  }
+  ```
 	
 	
